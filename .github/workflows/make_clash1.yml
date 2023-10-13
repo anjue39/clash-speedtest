@@ -16,7 +16,7 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.2  # 指定所需的 Go 版本
+        go-version: 1.17  # 指定所需的 Go 版本
 
     - name: Build Clash Config
       run: |
