@@ -1,0 +1,31 @@
+name: Generate Clash Config
+
+on:
+  push:
+    branches:
+      - main  # 可以更改为您的主分支名称
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.7  # 指定所需的 Go 版本
+
+    - name: Build Clash Config
+      run: |
+        go build main.go
+        ./main  # 运行 main.go 生成 clash.yaml
+
+    - name: Upload Clash Config
+      uses: actions/upload-artifact@v2
+      with:
+        name: clash-config
+        path: clash.yaml  # 指定生成的 clash.yaml 文件
+
