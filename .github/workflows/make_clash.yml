@@ -1,0 +1,35 @@
+name: Clash Config Filter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  filter-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: Build and Run
+        run: go run main.go
+
+      - name: Save Filtered Clash Config
+        run: |
+          # 从 main.go 中生成的 clash.yaml 复制到指定路径
+          cp clash.yaml clash.yaml
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add /path/to/save/clash.yaml
+          git commit -m "Update Clash config"
+          git push
